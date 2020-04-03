@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>正态分布演示</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='amazeui.css'>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script src='amazeui.js'></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+    <script src="app.js"></script>
+    
+
+</head>
+
+<body style="position: absolute; width: 100%;height: 100%;left: 0;top: 0;">
+
+    <form class="am-form " style="position: absolute; width: 100%;height: 20%;left: 0;top: 0;">
+
+        <ul class="am-avg-sm-2">
+
+            <li>
+                <div class="am-form-group">
+                    <label for="ipt-height">层数</label>
+                    <input type="number" class="" id="ipt-height" placeholder="层数">
+                </div>
+            </li>
+            <li>
+                <div class="am-form-group">
+                    <label for="ipt-speed">速度</label>
+                    <input type="number" class="" id="ipt-speed" placeholder="粒/秒">
+                </div>
+            </li>
+        </ul>
+
+        <button type="button" class="am-btn am-btn-primary" id="btn-start" onclick="start_simulation()">开始模拟【表格在下面】</button>
+    </form>
+
+    <div id="canvas-holder1"></div>
+
+    <div id="canvas-holder2"></div>
+
+</body>
+
+</html>
