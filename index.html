@@ -35,7 +35,10 @@
             </li>
         </ul>
 
-        <button type="button" class="am-btn am-btn-primary" id="btn-start" onclick="start_simulation()">开始模拟【表格在下面】</button>
+        <button type="button" class="am-btn am-btn-primary" id="btn-start" onclick="on_start()">开始模拟【表格在下面】</button>
+        <button type="button" class="am-btn am-btn-secondary" id="btn-pause" onclick="on_pause()" style="display:none;">暂停</button>
+        <button type="button" class="am-btn am-btn-secondary" id="btn-resume" onclick="on_resume()" style="display:none;">继续</button>
+        <button type="button" class="am-btn am-btn am-btn-default" id="btn-reload" onclick="location.reload()" >重新开始</button>
     </form>
 
     <div id="canvas-holder1"></div>

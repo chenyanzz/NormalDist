@@ -17,7 +17,7 @@ class DtBoard {
 
         this.spacing_x = this.width / (level + 1);//柱子横向间隔
         this.spacing_y = this.height / (level + 1);//柱子竖向间隔
-        
+
         this.particle_size = this.stick_size / 1.618;//粒子直径
         this.particle_speed = 0.1;//粒子走过一层的时间(s)
         this.particle_color = "rgba(21,159,238,0.8)";
@@ -57,6 +57,11 @@ class DtBoard {
 
 }
 
+function my_rand(seed) {
+    seed = (seed * 9301 + 49297) % 233280; //为何使用这三个数?
+    return seed / (233280.0);
+};
+
 class Particle {
     constructor(board, onDelete) {
         this.board = board
@@ -65,7 +70,10 @@ class Particle {
 
     execAnim() {
         for (var lv = 1; lv < this.board.level; lv++) {
-            var randBin = Math.random() > 0.5;
+
+            var seed = new Date().getTime();
+
+            var randBin = parseInt(Math.random() * 100000) % 2;
             var randDir = randBin ? -1 : 1;
 
             this.x += randBin ? 1 : 0;
@@ -103,7 +111,7 @@ class Particle {
 
         setTimeout(function () {
             the.particle.remove();
-            console.log("x="+the.x);
+            console.log("x=" + the.x);
             the.onDelete(the.x);
         }, (this.board.level - 1) * this.board.particle_speed * 1000);
 
@@ -134,12 +142,16 @@ function getUserInput() {
     }
 }
 
+var isRunning = false;
+
 //on btn click
 function start_simulation() {
 
     input = getUserInput();
 
     if (!input) return;
+
+    $("#btn-start").css({"display":"none"});
 
     board_holder = $("#canvas-holder1");
 
@@ -169,10 +181,10 @@ function start_simulation() {
     var chart = echarts.init(dom);
 
     var data = []
-    var xData=[]
+    var xData = []
 
-    for (var i = 0; i < input.level ; i++) {
-        xData[i] = i+1;
+    for (var i = 0; i < input.level; i++) {
+        xData[i] = i + 1;
         data[i] = 0;
     }
 
@@ -195,14 +207,34 @@ function start_simulation() {
 
     chart.setOption(chart_option);
 
+    on_resume();
+
     window.setInterval(function () {
+        if (!isRunning) return;
         p = new Particle(board, function (x) {
             chart_option.series[0].data[x]++;
         });
         p.start();
-    },1000.0 / input.speed);
+    }, 1000.0 / input.speed);
 
     window.setInterval(function () {
-            chart.setOption(chart_option);
-        },250);
+        if (!isRunning) return;
+        chart.setOption(chart_option);
+    }, 250);
+}
+
+function on_start(){
+    start_simulation();
+}
+
+function on_pause() {
+    isRunning=false;
+    $("#btn-pause").css({"display":"none"});
+    $("#btn-resume").css({"display":"inline"});
+}
+
+function on_resume() {
+    isRunning=true;
+    $("#btn-resume").css({"display":"none"});
+    $("#btn-pause").css({"display":"inline"});
 }
