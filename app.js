@@ -13,13 +13,13 @@ class DtBoard {
 
         //像素
 
-        this.stick_size = Math.min(this.width, this.height) / (2 * 1.618 * level);//柱子直径
+        this.stick_size = Math.min(this.width, this.height) / (1.618 * level);//柱子直径
 
         this.spacing_x = this.width / (level + 1);//柱子横向间隔
         this.spacing_y = this.height / (level + 1);//柱子竖向间隔
-
+        
         this.particle_size = this.stick_size / 1.618;//粒子直径
-        this.particle_speed = 0.3;//粒子走过一层的时间(s)
+        this.particle_speed = 0.1;//粒子走过一层的时间(s)
         this.particle_color = "rgba(21,159,238,0.8)";
 
         this.stick_color = "rgba(75,194,112,0.8)";
@@ -198,8 +198,11 @@ function start_simulation() {
     window.setInterval(function () {
         p = new Particle(board, function (x) {
             chart_option.series[0].data[x]++;
-            chart.setOption(chart_option);
         });
         p.start();
     },1000.0 / input.speed);
+
+    window.setInterval(function () {
+            chart.setOption(chart_option);
+        },250);
 }
