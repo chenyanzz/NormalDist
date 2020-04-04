@@ -202,7 +202,11 @@ function start_simulation() {
             data: data,
             type: 'line',
             smooth: true
-        }]
+        }],
+        tooltip:{
+            show : true,
+            trigger: "item"
+        }
     };
 
     chart.setOption(chart_option);
